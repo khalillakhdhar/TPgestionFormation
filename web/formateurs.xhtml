@@ -62,7 +62,7 @@
           <h:outputLabel value="tel" for="exampleFormControlInput8" class="form-label"></h:outputLabel>
           <h:inputText class="form-control" id="exampleFormControlInput8"  value="#{formateur.tel}"></h:inputText>
       <div class="mb-3 text-center">
-                <h:commandButton class="btn btn-primary" value="envoyer"></h:commandButton>
+          <h:commandButton class="btn btn-primary" action="#{formateur.ajouterFormateur()}" value="envoyer"></h:commandButton>
   
 </div>
 </div>
@@ -72,6 +72,41 @@
     </div>
   </div>
 </div>
+           <h:dataTable class="table table-bordered" value="#{formateur.listFormateurs}" var="lf">
+               <h:column>
+                   <f:facet name="header">nom</f:facet>
+                   <h:outputText value="#{lf.nom}"></h:outputText>
+               </h:column>
+                 <h:column>
+                   <f:facet name="header">prenom</f:facet>
+                   <h:outputText value="#{lf.prenom}"></h:outputText>
+               </h:column>
+               
+                 <h:column>
+                   <f:facet name="header">Email</f:facet>
+                   <h:outputText value="#{lf.email}"></h:outputText>
+               </h:column>
+                 <h:column>
+                   <f:facet name="header">age</f:facet>
+                   <h:outputText value="#{lf.age}"></h:outputText>
+               </h:column>
+                 <h:column>
+                   <f:facet name="header">Grade</f:facet>
+                   <h:outputText value="#{lf.grade}"></h:outputText>
+               </h:column>
+                 <h:column>
+                   <f:facet name="header">Année de recrutement</f:facet>
+                   <h:outputText value="#{lf.recrutement}"></h:outputText>
+               </h:column>
+                 <h:column>
+                   <f:facet name="header">Téléphone</f:facet>
+                   <h:outputText value="#{lf.tel}"></h:outputText>
+               </h:column>
+                <h:column>
+                   <f:facet name="header">supprimer</f:facet>
+                   <h:commandButton value="supprimer" class="btn btn-danger" action="#{formateur.deleteFormateur(lf.id)}"></h:commandButton>
+               </h:column>
+           </h:dataTable>
       </h:form>  
     </h:body>
 </html>
