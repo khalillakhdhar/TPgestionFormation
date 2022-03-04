@@ -133,6 +133,23 @@ Connection connection;
       
       
       }
+      
+      public void deleteFormation(int id)
+       {
+    try
+    {
+    connection = getConnection();  
+            PreparedStatement stmt = connection.prepareStatement("delete from formation where id = "+id);  
+            stmt.executeUpdate();  
+    }
+    catch(Exception ex)
+    {
+        System.out.println(ex);
+    
+    }
+    
+    
+    }
     
     
 }

@@ -71,7 +71,7 @@
                  
                 <h:column>
                    <f:facet name="header">supprimer</f:facet>
-                   <h:commandButton value="supprimer" class="btn btn-danger" ></h:commandButton>
+                   <h:commandButton value="supprimer" class="btn btn-danger" action="#{formation.deleteFormation(lf.id)}" ></h:commandButton>
                </h:column>
            </h:dataTable>
         </h:form>
