@@ -21,20 +21,18 @@ import javax.faces.bean.RequestScoped;
  */
 @ManagedBean
 @RequestScoped
-public class Formateur {
+public final class Formateur {
     private int id;
     private String nom,prenom,email,mdp,grade,tel;
     private int age,recrutement;
     Connection connection;
-    List<Formateur> listFormateurs=new ArrayList<Formateur>();
+    ArrayList<Formateur> listFormateurs;
 
     public int getId() {
         return id;
     }
 
-    public List<Formateur> getListFormateurs() {
-        return listFormateurs;
-    }
+   
 
     public void setId(int id) {
         this.id = id;
@@ -118,7 +116,8 @@ public class Formateur {
       {
           try
           {
-          connection = getConnection();
+               listFormateurs=new ArrayList<Formateur>();
+          //connection = getConnection();
             Statement stmt=getConnection().createStatement();  
             ResultSet rs=stmt.executeQuery("select * from formateur"); 
             while(rs.next()) //tant que rs à des valeurs
@@ -137,7 +136,8 @@ public class Formateur {
                 
             }
       
-      
+                  connection.close();        
+
       
           }
           catch(Exception ex)
@@ -157,9 +157,10 @@ public class Formateur {
       
     public String ajouterFormateur()
     {
+                    connection = getConnection();
+
      int result = 0;
         try{
-            connection = getConnection();
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO `formateur`( `nom`, `prenom`, `mdp`, `age`, `recrutement`, `grade`, `telephone`, `email`) VALUES(?,?,?,?,?,?,?,?)");
             stmt.setString(1, this.nom);
             stmt.setString(2, this.prenom);
@@ -170,15 +171,16 @@ public class Formateur {
             stmt.setString(7,this.tel);
             stmt.setString(8, this.email);
             result = stmt.executeUpdate();
+                        connection.close(); //optionelle
+
             System.out.println("ajouté!");
-            connection.close(); //optionelle
-        }catch(Exception e){
+            
+         } catch(Exception e){
             System.out.println(e);
         }
-        //if(result !=0)
-          /*  return "index.xhtml?faces-redirect=true";
-        else return "create.xhtml?faces-redirect=true"; */
-    return "formateurs.xhtml?faces-redirect=true";
+             if(result !=0)
+            return "formateurs.xhtml?faces-redirect=true";
+        else return "index.xhtml?faces-redirect=true";
     
     }
     public void deleteFormateur(int id)
@@ -199,7 +201,7 @@ public class Formateur {
     }
 
     public Formateur() {
-        showList();
+       // showList();
     }
 
     public Formateur(String nom, String prenom, String email, String mdp, String grade, String tel, int age, int recrutement) {
